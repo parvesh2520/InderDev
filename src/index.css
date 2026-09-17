@@ -12,9 +12,9 @@
   --color-ink: #ffffff;
   --color-ink-soft: rgba(255, 255, 255, 0.75);
   --color-ink-faint: rgba(255, 255, 255, 0.50);
-  --color-line: rgba(255, 255, 255, 0.06);
-  --color-glass: rgba(255, 255, 255, 0.02);
-  --color-glass-strong: rgba(255, 255, 255, 0.03);
+  --color-line: rgba(255, 255, 255, 0.03);
+  --color-glass: rgba(255, 255, 255, 0.0);
+  --color-glass-strong: rgba(255, 255, 255, 0.01);
 
   --color-saffron: #f5a623;
 
@@ -46,10 +46,10 @@ body {
 
 /* Direct glass classes — Image 2 reference frosted glass cards */
 .mausam-glass {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.0);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.45);
 }
 
@@ -62,10 +62,10 @@ body {
 
 /* "For you" card & primary cards — Image 2 reference glass */
 .mausam-glass-strong {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.01);
   backdrop-filter: blur(32px) saturate(1.5);
   -webkit-backdrop-filter: blur(32px) saturate(1.5);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow: 0 16px 36px -14px rgba(0, 0, 0, 0.55);
 }
 
