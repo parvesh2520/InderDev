@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: "DM Sans", "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-mono: "DM Sans", "Noto Sans Devanagari", ui-monospace, monospace;
+
+  /* Dark glass base — the actual card tone is supplied per weather via --wx-*.
+     Keeping it nearly opaque stops the lower content from turning into a
+     washed-out version of the page gradient. */
+  --color-ink: #ffffff;
+  --color-ink-soft: rgba(255, 255, 255, 0.75);
+  --color-ink-faint: rgba(255, 255, 255, 0.50);
+  --color-line: rgba(255, 255, 255, 0.12);
+  --color-glass: rgba(255, 255, 255, 0.10);
+  --color-glass-strong: rgba(255, 255, 255, 0.13);
+
+  --color-saffron: #f5a623;
+
+  /* Alert tiers */
+  --color-tier-info: #6ea8d8;
+  --color-tier-advisory: #f2c53d;
+  --color-tier-warning: #f0873a;
+  --color-tier-critical: #e5484d;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #05070c;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-deva {
+  font-family: "Noto Sans Devanagari", var(--font-sans);
+}
+
+.scroll-hide { scrollbar-width: none; -ms-overflow-style: none; }
+.scroll-hide::-webkit-scrollbar { display: none; }
+
+/* Direct glass classes — Image 2 reference frosted glass cards */
+.mausam-glass {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.45);
+}
+
+/* Side-menu drawer */
+.mausam-drawer {
+  backdrop-filter: blur(44px) saturate(1.5);
+  -webkit-backdrop-filter: blur(44px) saturate(1.5);
+  box-shadow: 8px 0 40px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* "For you" card & primary cards — Image 2 reference glass */
+.mausam-glass-strong {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(32px) saturate(1.5);
+  -webkit-backdrop-filter: blur(32px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 36px -14px rgba(0, 0, 0, 0.55);
+}
+
+@keyframes rain-fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(120%); } }
+@keyframes insight-in { 0% { opacity: 0; transform: translateY(12px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes pulse-soft { 0%, 100% { opacity: 0.35; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1); } }
+@keyframes theme-wash { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+.animate-insight { animation: insight-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade { animation: fade-in 0.4s ease both; }

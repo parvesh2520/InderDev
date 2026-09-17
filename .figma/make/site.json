@@ -1,0 +1,10 @@
+{
+  "description": "Create stunning UI/UX designs effortlessly with this tool, ideal for designers and developers seeking to enhance user experiences and streamline workflows.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
