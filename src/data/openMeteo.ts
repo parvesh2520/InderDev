@@ -63,6 +63,7 @@ function weatherCodeToCondition(code: number, isDay: boolean): Condition {
 }
 
 interface OpenMeteoForecast {
+  timezone?: string;
   current: {
     temperature_2m: number;
     apparent_temperature: number;
@@ -282,6 +283,7 @@ export async function fetchWeather(cityKey: string): Promise<Location | null> {
     // Build location
     const loc: Location = {
       key: cityKey,
+      timezone: forecast.timezone,
       city: city.city,
       region: city.region,
       condition,
