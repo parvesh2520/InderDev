@@ -4,6 +4,7 @@ import { Onboarding, Menu, Chat, Alerts } from "./mausam/screens";
 import { locations, type UserTypeKey, type Location } from "./mausam/data";
 import { fetchWeather, isLiveData } from "./data/openMeteo";
 import { getWeatherTheme, DEV_TIME_OVERRIDE } from "./mausam/theme";
+import { useLocationClock, DEFAULT_TIMEZONE } from "./mausam/clock";
 import { usePhotoAccent } from "./mausam/useAccent";
 import type { Lang } from "./mausam/i18n";
 import { useProfile, type Interest } from "./engine/profile";
@@ -101,7 +102,10 @@ export default function App() {
       precip: { ...resolvedBase.precip, ...(weatherOverride.precip ?? {}) },
     };
   }, [baseLocation, mockLocation, weatherOverride]);
-  const currentHour = simulatedHour ?? (DEV_TIME_OVERRIDE ?? new Date().getHours());
+  // Live device clock in the selected location's timezone; manual time (simulatedHour) overrides it
+  const liveClock = useLocationClock(location.timezone ?? DEFAULT_TIMEZONE);
+  const isManualTime = simulatedHour !== null;
+  const currentHour = simulatedHour ?? liveClock.hour;
   const theme = getWeatherTheme(location.condition, currentHour);
 
   // Accent is sampled live from the weather photo, so the whole UI recolors
@@ -121,14 +125,14 @@ export default function App() {
   };
 
   const formattedTimeLabel = useMemo(() => {
-    if (simulatedHour === null) return "9:41";
+    if (simulatedHour === null) return liveClock.label;
     let h = Math.floor(simulatedHour);
     const m = Math.round((simulatedHour - h) * 60);
     const ampm = h >= 12 ? "PM" : "AM";
     h = h % 12;
     if (h === 0) h = 12;
     return `${h}:${m < 10 ? "0" : ""}${m} ${ampm}`;
-  }, [simulatedHour]);
+  }, [simulatedHour, liveClock.label]);
 
   return (
     <div className="flex min-h-[100dvh] items-stretch justify-center bg-[#020306] sm:items-center sm:py-6">
@@ -153,6 +157,7 @@ export default function App() {
             className="flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-bold font-mono tracking-tight transition hover:bg-white/20 active:scale-95 border border-white/15 backdrop-blur-md"
             title="Click to toggle Time of Day & Environmental Preview"
           >
+            {isManualTime && <span className="h-1.5 w-1.5 rounded-full bg-amber-300" title="Manual time" />}
             <span>{formattedTimeLabel}</span>
           </button>
 
@@ -187,14 +192,19 @@ export default function App() {
               <div className="mb-3 rounded-2xl bg-white/5 p-2.5 text-left border border-white/8">
                 <div className="flex items-center justify-between text-[11px] font-mono text-white/80 mb-1">
                   <span>Solar Scrubber</span>
-                  <span className="font-bold text-amber-300">{formattedTimeLabel}</span>
+                  <span className="font-bold text-amber-300">
+                    {formattedTimeLabel}
+                    <span className="ml-1.5 font-normal text-white/60">
+                      {isManualTime ? "· Manual" : `· Live, ${location.city}`}
+                    </span>
+                  </span>
                 </div>
                 <input
                   type="range"
                   min="0"
                   max="23.9"
                   step="0.1"
-                  value={simulatedHour ?? 12}
+                  value={simulatedHour ?? liveClock.hour}
                   onChange={(e) => {
                     setSimulatedHour(parseFloat(e.target.value));
                     setSimulatedPhase(null);

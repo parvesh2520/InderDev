@@ -183,6 +183,8 @@ export interface DailyPoint {
 
 export interface Location {
   key: string;
+  /** IANA timezone of the location, e.g. "Asia/Kolkata" */
+  timezone?: string;
   city: string;
   region: string;
   condition: Condition;
